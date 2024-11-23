@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Oussama Imzilene's Portfolio</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <style>
+        /* Set up the overlay for the fade effect */
+        #introOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            display: flex;
+            flex-direction: column; /* Allows multiple lines to be centered vertically */
+            justify-content: center; /* Centers vertically */
+            align-items: center; /* Centers horizontally */
+            z-index: 10;
+            font-size: 3em;
+            font-weight: bold;
+            color: rgb(255, 242, 67);
+            opacity: 1;
+            transition: opacity 2s ease; /* Fade duration */
+            text-align: center; /* Centers text within the div */
+            font-family: 'Press Start 2P';/* Hacker-like font */
+        }
+
+        /* Loading bar styling */
+        #loadingBar {
+            width: 50%;
+            height: 20px;
+            background-color: #333; /* Background of the loading bar */
+            border: 2px solid #ffa72b; /* Border color */
+            margin-top: 20px; /* Space between text and loading bar */
+            position: relative; /* Position for the inner bar */
+        }
+
+        #loadingProgress {
+            height: 100%;
+            width: 0; /* Start at 0 width */
+            background-color: #ffd727; /* Loading bar color */
+            transition: width 5s linear; /* Smooth transition for loading */
+        }
+
+        /* Ensure Unity game container fills the screen behind the overlay */
+        #gameContainer {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Optional: Make the body background black to prevent white flashes */
+        body {
+            background-color: black;
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay with text and loading bar -->
+    <div id="introOverlay">
+        OUSSAMA IMZILENE's <br>PORTFOLIO
+        <div id="loadingBar">
+            <div id="loadingProgress"></div>
+        </div>
+    </div>
+
+    <!-- Unity game container running in the background -->
+    <div id="gameContainer"></div>
+
+    <script>
+        // Initialize Unity loader
+        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/lol.json", { onProgress: UnityProgress });
+
+        // Function to fade out the overlay
+        function fadeOutIntroOverlay() {
+            var overlay = document.getElementById('introOverlay');
+            overlay.style.opacity = 0;  // Triggers fade out
+            setTimeout(() => overlay.style.display = 'none', 4000); // Hide overlay after fade duration (4s)
+        }
+
+        // Simulate loading progress
+        function simulateLoading() {
+            var loadingProgress = document.getElementById('loadingProgress');
+            loadingProgress.style.width = '100%'; // Fill the loading bar
+            setTimeout(fadeOutIntroOverlay, 5000); // 5 seconds delay before fading
+        }
+
+        // Start the loading simulation
+        simulateLoading();
+    </script>
+</body>
+</html>
