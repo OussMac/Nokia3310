@@ -47,7 +47,7 @@
             height: 100%;
             width: 0; /* Start at 0 width */
             background-color: #ffd727; /* Loading bar color */
-            transition: width 5s linear; /* Smooth transition for loading */
+            transition: width 0.1s ease-in-out; /* Smooth transition for loading */
         }
 
         /* Ensure Unity game container fills the screen behind the overlay */
@@ -82,12 +82,15 @@
 
     <script>
         // Unity loader for WebGL 2022
-        const gameInstance = UnityLoader.instantiate("gameContainer", "Build/Build.json", {
-            onProgress: function (instance, progress) {
-                document.getElementById("loadingProgress").style.width = (progress * 100) + "%";
-                if (progress === 1) {
-                    fadeOutIntroOverlay(); // Trigger fade-out once loading is complete
-                }
+        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Build.json", {
+            onProgress: function(instance, progress) {
+                // Update the width of the loading bar based on the loading progress
+                var loadingProgress = document.getElementById("loadingProgress");
+                loadingProgress.style.width = (progress * 100) + "%"; // Update width to reflect progress
+            },
+            onLoad: function() {
+                // Fade out the intro overlay once the game is fully loaded
+                fadeOutIntroOverlay();
             }
         });
 
