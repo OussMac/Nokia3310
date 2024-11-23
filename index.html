@@ -6,9 +6,11 @@
     <title>Oussama Imzilene's Portfolio</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
     <style>
+        /* Hacker-style font using Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
         /* Set up the overlay for the fade effect */
         #introOverlay {
             position: fixed;
@@ -28,7 +30,7 @@
             opacity: 1;
             transition: opacity 2s ease; /* Fade duration */
             text-align: center; /* Centers text within the div */
-            font-family: 'Press Start 2P';/* Hacker-like font */
+            font-family: 'VT323', monospace; /* Hacker-like font */
         }
 
         /* Loading bar styling */
@@ -79,25 +81,22 @@
     <div id="gameContainer"></div>
 
     <script>
-        // Initialize Unity loader
-        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/lol.json", { onProgress: UnityProgress });
+        // Unity loader for WebGL 2022
+        const gameInstance = UnityLoader.instantiate("gameContainer", "Build/Build.json", {
+            onProgress: function (instance, progress) {
+                document.getElementById("loadingProgress").style.width = (progress * 100) + "%";
+                if (progress === 1) {
+                    fadeOutIntroOverlay(); // Trigger fade-out once loading is complete
+                }
+            }
+        });
 
         // Function to fade out the overlay
         function fadeOutIntroOverlay() {
-            var overlay = document.getElementById('introOverlay');
+            const overlay = document.getElementById('introOverlay');
             overlay.style.opacity = 0;  // Triggers fade out
-            setTimeout(() => overlay.style.display = 'none', 4000); // Hide overlay after fade duration (4s)
+            setTimeout(() => overlay.style.display = 'none', 2000); // Hide overlay after fade duration (2s)
         }
-
-        // Simulate loading progress
-        function simulateLoading() {
-            var loadingProgress = document.getElementById('loadingProgress');
-            loadingProgress.style.width = '100%'; // Fill the loading bar
-            setTimeout(fadeOutIntroOverlay, 5000); // 5 seconds delay before fading
-        }
-
-        // Start the loading simulation
-        simulateLoading();
     </script>
 </body>
 </html>
